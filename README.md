@@ -46,19 +46,7 @@
 - **🏗️ Modern Stack**: Tauri v2 + React 19 + TypeScript
 - **🔧 Extensible**: Plugin-ready architecture
 - **💾 Auto-save**: Never lose your work
-- **📤 Export Options**: PDF, HTML, Word formats
 - **🔗 Cross-platform**: Windows, macOS, Linux
-
-## 🎯 Why MarkZen?
-
-| Feature | MarkZen | Typora | Other Editors |
-|---------|---------|--------|--------------|
-| **Startup Time** | < 1s | ~3s | 2-5s |
-| **Memory Usage** | < 100MB | ~200MB | 150-500MB |
-| **Bundle Size** | < 15MB | ~100MB | 50-200MB |
-| **Large Files** | ✅ 100MB+ | ⚠️ Slow | ❌ Crash |
-| **Modern UI** | ✅ Glass | ⚠️ Basic | ✅ Varies |
-| **Open Source** | ✅ MIT | ❌ Paid | ✅ Varies |
 
 ## 🚀 Installation
 
@@ -130,21 +118,6 @@ graph TB
 - **Incremental Parsing**: Only re-render changed content
 - **Memory Management**: Efficient garbage collection
 
-## 🎨 Screenshots
-
-<div align="center">
-  
-### 📝 **Split View Mode**
-![Split View](screenshots/split-view.png)
-
-### 🧘 **Focus Mode**
-![Focus Mode](screenshots/focus-mode.png)
-
-### 🌙 **Dark Theme**
-![Dark Theme](screenshots/dark-theme.png)
-
-</div>
-
 ## 🛠️ Development
 
 ### 📋 **Prerequisites**
@@ -214,7 +187,6 @@ npm run tauri build  # Build Tauri app
 - ✅ Math & diagram support
 
 ### 🚀 **v0.2.0 - Enhanced Features**
-- 🔄 Plugin system
 - 📁 Advanced file management
 - 🎨 Theme customization
 - 📤 Enhanced export options
