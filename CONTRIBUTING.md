@@ -13,8 +13,8 @@ First off, thank you for considering contributing to MarkZen! 🎉
 
 ```bash
 # 1. Fork and clone the repository
-git clone https://github.com/yourusername/markzen.git
-cd markzen
+git clone git@github.com:Laurc2004/MarkZen.git
+cd MarkZen
 
 # 2. Install dependencies
 npm install
@@ -25,7 +25,7 @@ npm run tauri dev
 
 ## 🐛 Bug Reports
 
-Before creating bug reports, please check the [existing issues](https://github.com/yourusername/markzen/issues) to avoid duplicates.
+Before creating bug reports, please check the [existing issues](https://github.com/Laurc2004/MarkZen/issues) to avoid duplicates.
 
 ### Bug Report Template
 
@@ -193,9 +193,9 @@ src-tauri/
 
 ## ❓ Questions?
 
-- Join our [Discussions](https://github.com/yourusername/markzen/discussions)
-- Check the [Wiki](https://github.com/yourusername/markzen/wiki)
-- Open an [Issue](https://github.com/yourusername/markzen/issues)
+- Join our [Discussions](https://github.com/Laurc2004/MarkZen/discussions)
+- Check the [Wiki](https://github.com/Laurc2004/MarkZen/wiki)
+- Open an [Issue](https://github.com/Laurc2004/MarkZen/issues)
 
 ## 🙏 Recognition
 

@@ -7,7 +7,7 @@
   
   *Inspired by Typora, Built with Modern Technologies*
   
-  [![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/yourusername/markzen/releases)
+  [![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/Laurc2004/MarkZen/releases)
   [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
   [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#installation)
   [![Built with Tauri](https://img.shields.io/badge/built%20with-Tauri%20v2-orange.svg)](https://tauri.app/)
@@ -79,8 +79,8 @@
 # - Tauri CLI
 
 # Clone repository
-git clone https://github.com/yourusername/markzen.git
-cd markzen
+git clone git@github.com:Laurc2004/MarkZen.git
+cd MarkZen
 
 # Install dependencies
 npm install
@@ -164,8 +164,8 @@ npm install -g @tauri-apps/cli
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/markzen.git
-cd markzen
+git clone git@github.com:Laurc2004/MarkZen.git
+cd MarkZen
 
 # 2. Install dependencies
 npm install
@@ -239,10 +239,10 @@ npm run tauri build  # Build Tauri app
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ### 🐛 **Bug Reports**
-Found a bug? [Open an issue](https://github.com/yourusername/markzen/issues/new?template=bug_report.md)
+Found a bug? [Open an issue](https://github.com/Laurc2004/MarkZen/issues/new?template=bug_report.md)
 
 ### 💡 **Feature Requests**
-Have an idea? [Request a feature](https://github.com/yourusername/markzen/issues/new?template=feature_request.md)
+Have an idea? [Request a feature](https://github.com/Laurc2004/MarkZen/issues/new?template=feature_request.md)
 
 ### 🔧 **Development**
 1. Fork the repository
@@ -265,7 +265,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/markzen&type=Date)](https://star-history.com/#yourusername/markzen&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Laurc2004/MarkZen&type=Date)](https://star-history.com/#Laurc2004/MarkZen&Date)
 
 ---
 
