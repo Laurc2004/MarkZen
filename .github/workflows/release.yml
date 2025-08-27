@@ -10,10 +10,15 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+  issues: write
+  repository-projects: write
+
 jobs:
   build:
-    permissions:
-      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -58,49 +63,28 @@ jobs:
         with:
           tagName: ${{ github.ref_name }}
           releaseName: 'MarkZen ${{ github.ref_name }}'
-          releaseBody: 'See the assets to download this version and install.'
+          releaseBody: |
+            ## 🚀 What's New in ${{ github.ref_name }}
+            
+            ### ✨ Features
+            - Lightning-fast Markdown editing experience
+            - Real-time preview with zero delay
+            - Modern glass morphism UI design
+            - Cross-platform support (Windows, macOS, Linux)
+            
+            ### 📦 Installation
+            - **Windows**: Download the `.msi` installer
+            - **macOS**: Download the `.dmg` installer
+            - **Linux**: Download the `.deb` or `.AppImage` package
+            
+            ### 🔧 Tech Stack
+            - Built with Tauri v2 + React 19 + TypeScript
+            - Powered by Rust for maximum performance
+            - Bundle size < 15MB
+            
+            ### 🐛 Bug Reports & 💡 Feature Requests
+            Please report issues and suggest features on our [GitHub Issues](https://github.com/${{ github.repository }}/issues) page.
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
 
-  release:
-    permissions:
-      contents: write
-    runs-on: ubuntu-22.04
-    needs: build
-    if: startsWith(github.ref, 'refs/tags/')
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Create Release Notes
-        run: |
-          echo "## 🚀 What's New in ${{ github.ref_name }}" > release_notes.md
-          echo "" >> release_notes.md
-          echo "### ✨ Features" >> release_notes.md
-          echo "- Lightning-fast Markdown editing experience" >> release_notes.md
-          echo "- Real-time preview with zero delay" >> release_notes.md
-          echo "- Modern glass morphism UI design" >> release_notes.md
-          echo "- Cross-platform support (Windows, macOS, Linux)" >> release_notes.md
-          echo "" >> release_notes.md
-          echo "### 📦 Installation" >> release_notes.md
-          echo "- **Windows**: Download \`MarkZen-${{ github.ref_name }}-windows.msi\`" >> release_notes.md
-          echo "- **macOS**: Download \`MarkZen-${{ github.ref_name }}-macos.dmg\`" >> release_notes.md
-          echo "- **Linux**: Download \`MarkZen-${{ github.ref_name }}-linux.deb\` or \`MarkZen-${{ github.ref_name }}-linux.AppImage\`" >> release_notes.md
-          echo "" >> release_notes.md
-          echo "### 🔧 Tech Stack" >> release_notes.md
-          echo "- Built with Tauri v2 + React 19 + TypeScript" >> release_notes.md
-          echo "- Powered by Rust for maximum performance" >> release_notes.md
-          echo "- Bundle size < 15MB" >> release_notes.md
-          echo "" >> release_notes.md
-          echo "### 🐛 Bug Reports & 💡 Feature Requests" >> release_notes.md
-          echo "Please report issues and suggest features on our [GitHub Issues](https://github.com/${{ github.repository }}/issues) page." >> release_notes.md
-
-      - name: Update Release
-        uses: softprops/action-gh-release@v1
-        with:
-          body_path: release_notes.md
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
