@@ -1,0 +1,523 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* MarkZen 全局样式 */
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply font-sans text-gray-900 antialiased;
+    @apply dark:text-white;
+    font-family: "MiSans", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+    font-feature-settings: 'liga' 1, 'calt' 1;
+    font-size: 16px;
+    line-height: 1.6;
+    
+    /* Enhanced glass background */
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+      linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    background-size: 200% 200%;
+    animation: glassMove 15s ease-in-out infinite;
+    background-attachment: fixed;
+  }
+  
+  .dark body {
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+      linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background-size: 200% 200%;
+    animation: glassMove 15s ease-in-out infinite;
+    background-attachment: fixed;
+  }
+  
+  * {
+    /* 自定义滚动条样式 - 使用标准CSS */
+    scrollbar-width: thin;
+    scrollbar-color: rgb(209 213 219) transparent;
+  }
+  
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: rgb(209 213 219);
+    border-radius: 3px;
+  }
+  
+  .dark *::-webkit-scrollbar-thumb {
+    background-color: rgb(75 85 99);
+  }
+  
+  /* Better text selection */
+  ::selection {
+    background-color: rgba(59, 130, 246, 0.3);
+    color: inherit;
+  }
+  
+  ::-moz-selection {
+    background-color: rgba(59, 130, 246, 0.3);
+    color: inherit;
+  }
+}
+
+@layer components {
+  /* 毛玻璃效果 - 使用最高透明度 */
+  .glass {
+    @apply backdrop-blur-2xl bg-white/70 dark:bg-gray-900/70;
+    @apply border border-white/30 dark:border-white/25;
+    @apply shadow-2xl dark:shadow-2xl;
+    border-radius: 24px;
+    backdrop-filter: blur(40px) saturate(250%) contrast(115%) brightness(115%);
+    -webkit-backdrop-filter: blur(40px) saturate(250%) contrast(115%) brightness(115%);
+    box-shadow: 
+      0 32px 64px -12px rgba(0, 0, 0, 0.15), 
+      0 16px 32px -8px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  }
+  
+  .dark .glass {
+    backdrop-filter: blur(40px) saturate(250%) contrast(110%) brightness(100%);
+    -webkit-backdrop-filter: blur(40px) saturate(250%) contrast(110%) brightness(100%);
+    box-shadow: 
+      0 32px 64px -12px rgba(0, 0, 0, 0.4), 
+      0 16px 32px -8px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+  
+  .glass-strong {
+    @apply backdrop-blur-2xl bg-white/80 dark:bg-gray-900/80;
+    @apply border border-white/40 dark:border-white/35;
+    @apply shadow-2xl dark:shadow-2xl;
+    border-radius: 24px;
+    backdrop-filter: blur(48px) saturate(280%) contrast(118%) brightness(118%);
+    -webkit-backdrop-filter: blur(48px) saturate(280%) contrast(118%) brightness(118%);
+    box-shadow: 
+      0 40px 80px -12px rgba(0, 0, 0, 0.2), 
+      0 20px 40px -8px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+  }
+  
+  .dark .glass-strong {
+    backdrop-filter: blur(48px) saturate(280%) contrast(115%) brightness(95%);
+    -webkit-backdrop-filter: blur(48px) saturate(280%) contrast(115%) brightness(95%);
+    box-shadow: 
+      0 40px 80px -12px rgba(0, 0, 0, 0.6), 
+      0 20px 40px -8px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  }
+
+  .glass-subtle {
+    @apply backdrop-blur-xl bg-white/60 dark:bg-gray-900/60;
+    @apply border border-white/25 dark:border-white/20;
+    @apply shadow-lg dark:shadow-lg;
+    border-radius: 24px;
+    backdrop-filter: blur(32px) saturate(200%) contrast(108%) brightness(110%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%) contrast(108%) brightness(110%);
+    box-shadow: 
+      0 24px 48px -4px rgba(0, 0, 0, 0.1), 
+      0 8px 16px -2px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  }
+  
+  .dark .glass-subtle {
+    backdrop-filter: blur(32px) saturate(200%) contrast(105%) brightness(105%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%) contrast(105%) brightness(105%);
+    box-shadow: 
+      0 24px 48px -4px rgba(0, 0, 0, 0.25), 
+      0 8px 16px -2px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  /* 毛玻璃主题变体 - 统一圆角 */
+  .glass-paper {
+    @apply backdrop-blur-md bg-gray-50/60 border-gray-200/30 rounded-2xl;
+    @apply shadow-lg;
+    backdrop-filter: blur(16px) saturate(160%) brightness(106%) contrast(102%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%) brightness(106%) contrast(102%);
+    box-shadow: 
+      0 10px 15px -3px rgba(107, 114, 128, 0.08), 
+      0 4px 6px -2px rgba(107, 114, 128, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .glass-midnight {
+    @apply backdrop-blur-md bg-gray-900/60 border-gray-600/30 rounded-2xl;
+    @apply shadow-lg;
+    backdrop-filter: blur(16px) saturate(160%) brightness(92%) contrast(105%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%) brightness(92%) contrast(105%);
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.25), 
+      0 4px 6px -2px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-black {
+    @apply backdrop-blur-md bg-black/60 border-gray-700/30 rounded-2xl;
+    @apply shadow-lg;
+    backdrop-filter: blur(16px) saturate(160%) brightness(88%) contrast(108%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%) brightness(88%) contrast(108%);
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.3), 
+      0 4px 6px -2px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  /* 专注模式样式 */
+  .focus-mode {
+    @apply transition-all duration-500 ease-in-out;
+  }
+  
+  .focus-mode .sidebar {
+    @apply -translate-x-full opacity-0;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  }
+  
+  .focus-mode .preview {
+    @apply translate-x-full opacity-0;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  }
+
+  /* 编辑器主题 - 增强毛玻璃效果 */
+  .editor-theme-paper {
+    @apply bg-gray-50/90 text-gray-900;
+    backdrop-filter: blur(12px) saturate(140%) brightness(106%) contrast(102%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%) brightness(106%) contrast(102%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+  
+  .editor-theme-midnight {
+    @apply bg-gray-900/90 text-white;
+    backdrop-filter: blur(12px) saturate(140%) brightness(94%) contrast(105%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%) brightness(94%) contrast(105%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  
+  .editor-theme-black {
+    @apply bg-black/90 text-white;
+    backdrop-filter: blur(12px) saturate(140%) brightness(88%) contrast(108%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%) brightness(88%) contrast(108%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  /* Enhanced code highlighting with better contrast */
+  .markdown-preview pre {
+    @apply relative overflow-x-auto rounded-lg;
+    background: var(--code-bg) !important;
+    border: 1px solid var(--code-border);
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .markdown-preview code {
+    color: var(--code-text) !important;
+    font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', 'Fira Code', monospace;
+    font-size: 0.875em;
+    line-height: 1.5;
+  }
+  
+  .markdown-preview p code,
+  .markdown-preview li code {
+    background: var(--inline-code-bg) !important;
+    color: var(--code-text) !important;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    border: 1px solid var(--code-border);
+    font-size: 0.875em;
+  }
+  
+  /* Code highlighting themes */
+  :root {
+    --code-bg: #f6f8fa;
+    --code-border: #d0d7de;
+    --code-text: #24292f;
+    --inline-code-bg: #f3f4f6;
+  }
+  
+  /* Dark mode code highlighting */
+  .dark {
+    --code-bg: #161b22;
+    --code-border: #30363d;
+    --code-text: #f0f6fc;
+    --inline-code-bg: #21262d;
+  }
+  
+  /* 强制覆盖highlight.js样式以确保主题适配 */
+  .markdown-preview .hljs {
+    background: var(--code-bg) !important;
+    color: var(--code-text) !important;
+  }
+  
+  .markdown-preview .hljs-keyword {
+    color: var(--hljs-keyword) !important;
+  }
+  
+  .markdown-preview .hljs-string {
+    color: var(--hljs-string) !important;
+  }
+  
+  .markdown-preview .hljs-comment {
+    color: var(--hljs-comment) !important;
+    font-style: italic;
+  }
+  
+  .markdown-preview .hljs-number {
+    color: var(--hljs-number) !important;
+  }
+  
+  .markdown-preview .hljs-function {
+    color: var(--hljs-function) !important;
+  }
+  
+  /* 亮色模式代码高亮颜色 */
+  :root {
+    --hljs-keyword: #7c3aed;
+    --hljs-string: #059669;
+    --hljs-comment: #6b7280;
+    --hljs-number: #dc2626;
+    --hljs-function: #2563eb;
+  }
+  
+  /* 暗色模式代码高亮颜色 */
+  .dark {
+    --hljs-keyword: #a78bfa;
+    --hljs-string: #34d399;
+    --hljs-comment: #9ca3af;
+    --hljs-number: #f87171;
+    --hljs-function: #60a5fa;
+  }
+  
+  /* Mermaid图表样式 */
+  .mermaid-diagram {
+    @apply flex justify-center my-4;
+  }
+  
+  .mermaid-diagram svg {
+    @apply max-w-full h-auto;
+  }
+
+  /* 按钮样式 - 统一圆角和简化设计 */
+  .btn {
+    @apply px-3 py-2 font-medium transition-all duration-200;
+    @apply hover:scale-105 active:scale-95;
+    @apply backdrop-blur-sm bg-white/10 hover:bg-white/20;
+    @apply border border-white/10 hover:border-white/20;
+    border-radius: 24px;
+  }
+  
+  .btn-primary {
+    @apply bg-gray-800/80 text-white;
+    @apply hover:bg-gray-700 shadow-lg hover:shadow-xl;
+    @apply backdrop-blur-sm;
+    border-radius: 24px;
+    backdrop-filter: blur(8px) saturate(140%);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+  }
+  
+  .btn-ghost {
+    @apply bg-transparent hover:bg-white/10 dark:hover:bg-white/5;
+    @apply text-gray-700 dark:text-gray-300;
+    @apply border border-transparent hover:border-white/15;
+    @apply backdrop-blur-sm;
+    border-radius: 24px;
+  }
+
+  /* 卡片样式 - 统一圆角设计 */
+  .card {
+    @apply glass p-6;
+    @apply hover:shadow-xl hover:scale-[1.01];
+    @apply transition-all duration-300 ease-out;
+    border-radius: 32px;
+  }
+
+  .card-subtle {
+    @apply glass-subtle p-4;
+    @apply hover:shadow-lg;
+    @apply transition-all duration-200 ease-out;
+    border-radius: 24px;
+  }
+
+  /* 动画增强 */
+  .fade-in {
+    @apply animate-fade-in;
+  }
+  
+  .slide-up {
+    @apply animate-slide-up;
+  }
+
+  /* 毛玻璃效果动画增强 */
+  .glass-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(255, 255, 255, 0.15), 
+      transparent
+    );
+    animation: shimmer 3s infinite;
+    z-index: 1;
+  }
+
+  .dark .glass-shimmer::before {
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(255, 255, 255, 0.08), 
+      transparent
+    );
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+  
+  /* 毛玻璃悬停效果 */
+  .glass-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .glass-hover:hover {
+    backdrop-filter: blur(20px) saturate(200%) brightness(110%);
+    -webkit-backdrop-filter: blur(20px) saturate(200%) brightness(110%);
+    transform: translateY(-2px);
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.15), 
+      0 12px 25px -8px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  
+  .dark .glass-hover:hover {
+    backdrop-filter: blur(20px) saturate(200%) brightness(100%);
+    -webkit-backdrop-filter: blur(20px) saturate(200%) brightness(100%);
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.4), 
+      0 12px 25px -8px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  /* 毛玻璃背景动态效果 */
+  .glass-dynamic {
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    background-size: 200% 200%;
+    animation: glassMove 10s ease-in-out infinite;
+  }
+  
+  .dark .glass-dynamic {
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+    background-size: 200% 200%;
+    animation: glassMove 10s ease-in-out infinite;
+  }
+  
+  @keyframes glassMove {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+}
+
+@layer utilities {
+  /* 层级管理 - 使用更高的z-index值 */
+  .z-dropdown { z-index: 50; }
+  .z-modal { z-index: 60; }
+  .z-tooltip { z-index: 70; }
+  .z-max { z-index: 999; }
+  .z-highest { z-index: 9999; }
+  
+  /* 打字机模式 */
+  .typewriter-mode {
+    padding-top: 50vh;
+    padding-bottom: 50vh;
+  }
+  
+  /* 隐藏滚动条但保持功能 */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* 简化的动画 */
+  .animate-slide-up {
+    animation: slideUp 0.2s ease-out;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+/* CodeMirror 主题定制 */
+.cm-editor {
+  @apply text-base leading-relaxed;
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+}
+
+.cm-focused {
+  @apply outline-none;
+}
+
+/* Markdown 预览样式 */
+.markdown-preview {
+  @apply prose prose-lg max-w-none;
+  @apply dark:prose-invert;
+  @apply prose-headings:font-bold prose-headings:tracking-tight;
+  @apply prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl;
+  @apply prose-p:leading-relaxed prose-p:text-gray-700 dark:prose-p:text-gray-300;
+  @apply prose-code:bg-gray-100 dark:prose-code:bg-gray-800;
+  @apply prose-code:px-1 prose-code:py-0.5 prose-code:rounded;
+  @apply prose-pre:bg-gray-50 dark:prose-pre:bg-gray-900;
+  @apply prose-blockquote:border-l-gray-600;
+}

@@ -1,0 +1,623 @@
+// MarkZen Mixins - Notion-Inspired Reusable Patterns
+// Complete design system mixins based on Notion's UI principles
+
+@use 'variables' as *;
+@use 'sass:map';
+@use 'sass:meta';
+
+// =============================================================================
+// UTILITY FUNCTIONS
+// =============================================================================
+
+// Enhanced helper function to get nested map values
+@function get($map, $keys...) {
+  @each $key in $keys {
+    $map: map.get($map, $key);
+  }
+  @return $map;
+}
+
+// Color Functions
+@function color($theme, $key) {
+  @return get($colors, $theme, $key);
+}
+
+@function accent-color($key) {
+  @return get($accent-colors, $key);
+}
+
+@function spacing($key) {
+  @return get($spacing, $key);
+}
+
+@function radius($key) {
+  @return get($radius, $key);
+}
+
+@function shadow($key) {
+  @return get($shadows, $key);
+}
+
+@function z($key) {
+  @return get($z-index, $key);
+}
+
+@function transition($key) {
+  @return get($transitions, $key);
+}
+
+// =============================================================================
+// NOTION THEME SYSTEM
+// =============================================================================
+
+// Complete theme colors mixin with all CSS custom properties
+@mixin theme-colors($theme) {
+  // Backgrounds
+  --bg-primary: #{color($theme, bg-primary)};
+  --bg-secondary: #{color($theme, bg-secondary)};
+  --bg-tertiary: #{color($theme, bg-tertiary)};
+  --bg-elevated: #{color($theme, bg-elevated)};
+  
+  // Text colors
+  --text-primary: #{color($theme, text-primary)};
+  --text-secondary: #{color($theme, text-secondary)};
+  --text-tertiary: #{color($theme, text-tertiary)};
+  --text-disabled: #{color($theme, text-disabled)};
+  --text-link: #{color($theme, text-link)};
+  --text-accent: #{color($theme, text-accent)};
+  
+  // Borders
+  --border-light: #{color($theme, border-light)};
+  --border-medium: #{color($theme, border-medium)};
+  --border-strong: #{color($theme, border-strong)};
+  --border-focus: #{color($theme, border-focus)};
+  
+  // Surfaces
+  --surface: #{color($theme, surface)};
+  --surface-hover: #{color($theme, surface-hover)};
+  --surface-active: #{color($theme, surface-active)};
+  --surface-selected: #{color($theme, surface-selected)};
+  
+  // Shadows
+  --shadow-sm: #{color($theme, shadow-sm)};
+  --shadow-md: #{color($theme, shadow-md)};
+  --shadow-lg: #{color($theme, shadow-lg)};
+  --shadow-xl: #{color($theme, shadow-xl)};
+}
+
+// =============================================================================
+// NOTION BUTTON SYSTEM
+// =============================================================================
+
+// Base button mixin with Notion's interaction patterns
+@mixin notion-button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: radius(base);
+  font-family: get($typography, fonts, sans);
+  font-weight: get($typography, weights, medium);
+  line-height: get($typography, line-heights, snug);
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  transition: all transition(normal) transition(ease-out);
+  
+  // Focus styles
+  &:focus-visible {
+    outline: none;
+    box-shadow: shadow(focus-ring);
+  }
+  
+  // Disabled state
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  // Active state
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+// Notion button variants
+@mixin notion-button($variant: 'default', $size: 'md') {
+  @include notion-button-base;
+  
+  // Size variants
+  @if $size == 'xs' {
+    padding: spacing(1) spacing(2);
+    font-size: get($typography, sizes, xs);
+    height: 1.5rem;
+  } @else if $size == 'sm' {
+    padding: spacing(1.5) spacing(2.5);
+    font-size: get($typography, sizes, sm);
+    height: 2rem;
+  } @else if $size == 'lg' {
+    padding: spacing(3) spacing(4);
+    font-size: get($typography, sizes, lg);
+    height: 3rem;
+  } @else {
+    // Default 'md' size
+    padding: spacing(2) spacing(3);
+    font-size: get($typography, sizes, sm);
+    height: 2.25rem;
+  }
+  
+  // Style variants
+  @if $variant == 'primary' {
+    background-color: accent-color(blue);
+    color: white;
+    border-color: accent-color(blue);
+    
+    &:hover:not(:disabled) {
+      background-color: accent-color(blue-dark);
+      border-color: accent-color(blue-dark);
+      box-shadow: shadow(sm);
+    }
+    
+  } @else if $variant == 'secondary' {
+    background-color: var(--surface);
+    color: var(--text-primary);
+    border-color: var(--border-medium);
+    
+    &:hover:not(:disabled) {
+      background-color: var(--surface-hover);
+      border-color: var(--border-strong);
+    }
+    
+  } @else if $variant == 'ghost' {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border-color: transparent;
+    
+    &:hover:not(:disabled) {
+      background-color: var(--surface-hover);
+      color: var(--text-primary);
+    }
+    
+  } @else if $variant == 'destructive' {
+    background-color: accent-color(red);
+    color: white;
+    border-color: accent-color(red);
+    
+    &:hover:not(:disabled) {
+      background-color: accent-color(red-dark);
+      border-color: accent-color(red-dark);
+    }
+    
+  } @else {
+    // Default variant - minimal style
+    background-color: transparent;
+    color: var(--text-secondary);
+    border-color: transparent;
+    
+    &:hover:not(:disabled) {
+      background-color: var(--surface-hover);
+      color: var(--text-primary);
+    }
+  }
+}
+
+// =============================================================================
+// NOTION INPUT SYSTEM
+// =============================================================================
+
+@mixin notion-input($size: 'md') {
+  width: 100%;
+  border: 1px solid var(--border-light);
+  border-radius: radius(base);
+  background-color: var(--surface);
+  color: var(--text-primary);
+  font-family: get($typography, fonts, sans);
+  line-height: get($typography, line-heights, normal);
+  transition: all transition(normal) transition(ease-out);
+  
+  @if $size == 'sm' {
+    padding: spacing(1.5) spacing(2.5);
+    font-size: get($typography, sizes, sm);
+    height: 2rem;
+  } @else if $size == 'lg' {
+    padding: spacing(3) spacing(4);
+    font-size: get($typography, sizes, lg);
+    height: 3rem;
+  } @else {
+    // Default 'md' size
+    padding: spacing(2) spacing(3);
+    font-size: get($typography, sizes, base);
+    height: 2.25rem;
+  }
+  
+  &::placeholder {
+    color: var(--text-tertiary);
+  }
+  
+  &:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: shadow(focus);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--bg-secondary);
+  }
+  
+  &:invalid {
+    border-color: accent-color(red);
+    
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(224, 62, 62, 0.1);
+    }
+  }
+}
+
+// =============================================================================
+// NOTION CARD SYSTEM
+// =============================================================================
+
+@mixin notion-card($elevated: false, $interactive: false) {
+  background-color: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: radius(md);
+  
+  @if $elevated {
+    box-shadow: shadow(md);
+  } @else {
+    box-shadow: shadow(sm);
+  }
+  
+  @if $interactive {
+    cursor: pointer;
+    transition: all transition(normal) transition(ease-out);
+    
+    &:hover {
+      border-color: var(--border-medium);
+      @if $elevated {
+        box-shadow: shadow(lg);
+      } @else {
+        box-shadow: shadow(md);
+      }
+      transform: translateY(-1px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// =============================================================================
+// NOTION DROPDOWN SYSTEM
+// =============================================================================
+
+@mixin notion-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 12rem;
+  max-width: 20rem;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: radius(md);
+  box-shadow: shadow(lg);
+  padding: spacing(2);
+  z-index: z(dropdown);
+  
+  // Animation
+  animation: slideUp transition(normal) transition(ease-out);
+  
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: spacing(2) spacing(3);
+    border-radius: radius(sm);
+    font-size: get($typography, sizes, sm);
+    font-weight: get($typography, weights, normal);
+    color: var(--text-primary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color transition(fast) transition(ease-out);
+    text-align: left;
+    
+    &:hover {
+      background-color: var(--surface-hover);
+    }
+    
+    &.active,
+    &[aria-selected='true'] {
+      background-color: var(--surface-selected);
+      color: var(--text-accent);
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+  
+  .dropdown-divider {
+    height: 1px;
+    background-color: var(--border-light);
+    margin: spacing(1) 0;
+  }
+}
+
+// Notion-style Modal
+@mixin notion-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: z(modal);
+  padding: spacing(4);
+  
+  .modal-content {
+    background-color: var(--surface);
+    border-radius: radius(lg);
+    box-shadow: shadow(xl);
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    
+    .modal-header {
+      padding: spacing(4) spacing(6);
+      border-bottom: 1px solid var(--border-light);
+      
+      .modal-title {
+        font-size: get($typography, sizes, lg);
+        font-weight: get($typography, weights, semibold);
+        color: var(--text-primary);
+        margin: 0;
+      }
+    }
+    
+    .modal-body {
+      padding: spacing(6);
+      overflow-y: auto;
+    }
+    
+    .modal-footer {
+      padding: spacing(4) spacing(6);
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      gap: spacing(2);
+      justify-content: flex-end;
+    }
+  }
+}
+
+// Scrollbar Styling (Notion-like)
+@mixin notion-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--border-medium);
+    border-radius: radius(full);
+    border: 2px solid transparent;
+    background-clip: content-box;
+    
+    &:hover {
+      background-color: var(--text-tertiary);
+    }
+  }
+  
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-medium) transparent;
+}
+
+// Typography Helpers
+@mixin text($size: 'base', $weight: 'normal') {
+  font-size: get($typography, sizes, $size);
+  font-weight: get($typography, weights, $weight);
+  font-family: get($typography, fonts, sans);
+}
+
+@mixin heading($level: 1) {
+  font-family: get($typography, fonts, sans);
+  font-weight: get($typography, weights, semibold);
+  line-height: get($typography, line-heights, tight);
+  color: var(--text-primary);
+  margin: 0;
+  
+  @if $level == 1 {
+    font-size: get($typography, sizes, '4xl');
+  } @else if $level == 2 {
+    font-size: get($typography, sizes, '3xl');
+  } @else if $level == 3 {
+    font-size: get($typography, sizes, '2xl');
+  } @else if $level == 4 {
+    font-size: get($typography, sizes, xl);
+  } @else if $level == 5 {
+    font-size: get($typography, sizes, lg);
+  } @else {
+    font-size: get($typography, sizes, base);
+  }
+}
+
+// Layout Helpers
+@mixin container {
+  max-width: get($layout, max-width);
+  margin: 0 auto;
+  padding: 0 spacing(4);
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Responsive Breakpoints
+@mixin media($breakpoint) {
+  @media (min-width: get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+// Animation Helpers
+@mixin fade-in($duration: get($transitions, normal)) {
+  animation: fadeIn $duration ease-in-out;
+}
+
+@mixin slide-up($duration: get($transitions, normal)) {
+  animation: slideUp $duration ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Focus Management
+@mixin focus-ring($color: color(accent, blue)) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: 2px;
+  }
+}
+
+// Truncate Text
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Hide Visually (for accessibility)
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Glassmorphism Effects
+@mixin glass($variant: 'light-subtle') {
+  $effect: get($glass-effects, $variant);
+  backdrop-filter: get($effect, backdrop-filter);
+  background: get($effect, background);
+  border: get($effect, border);
+  box-shadow: get($effect, box-shadow);
+}
+
+// Specific glass effect mixins for convenience
+@mixin glass-subtle {
+  @include glass('light-subtle');
+  
+  .theme-dark &,
+  .theme-glass & {
+    @include glass('dark-subtle');
+  }
+}
+
+@mixin glass-medium {
+  @include glass('light-medium');
+  
+  .theme-dark &,
+  .theme-glass & {
+    @include glass('dark-medium');
+  }
+}
+
+@mixin glass-strong {
+  @include glass('light-strong');
+  
+  .theme-dark &,
+  .theme-glass & {
+    @include glass('dark-strong');
+  }
+}
+
+// Glassmorphism Button
+@mixin glass-button {
+  @include glass-subtle;
+  @include notion-button;
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  &:hover:not(:disabled) {
+    @include glass-medium;
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Glassmorphism Card
+@mixin glass-card {
+  @include glass-medium;
+  padding: spacing(4);
+  border-radius: radius(lg);
+  
+  &:hover {
+    @include glass-strong;
+    transform: translateY(-2px);
+  }
+}
+
+// Glassmorphism Dropdown
+@mixin glass-dropdown {
+  @include glass-strong;
+  border-radius: radius(xl);
+  padding: spacing(2);
+  z-index: z(dropdown);
+  
+  .dropdown-item {
+    @include notion-button;
+    width: 100%;
+    justify-content: flex-start;
+    background: transparent;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
